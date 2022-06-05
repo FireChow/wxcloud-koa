@@ -4,7 +4,7 @@ const logger = require("koa-logger");
 const bodyParser = require("koa-bodyparser");
 const fs = require("fs");
 const path = require("path");
-const { init: initDB, Counter } = require("./db");
+const { init: initDB, User } = require("./db");
 
 const router = new Router();
 
@@ -16,30 +16,25 @@ router.get("/", async (ctx) => {
 });
 
 // 更新计数
-router.post("/api/count", async (ctx) => {
+router.post("/api/user", async (ctx) => {
   const { request } = ctx;
-  const { action } = request.body;
-  if (action === "inc") {
-    await Counter.create();
-  } else if (action === "clear") {
-    await Counter.destroy({
-      truncate: true,
-    });
-  }
+  const { user } = request.body;
+  let newUser = User.build(user)
+  let result = await newUser.save()
 
   ctx.body = {
-    code: 0,
-    data: await Counter.count(),
+    code: 200,
+    data: result
   };
 });
 
 // 获取计数
-router.get("/api/count", async (ctx) => {
-  const result = await Counter.count();
-
+router.get("/api/user/:openid", async (ctx) => {
+  const { openid } = ctx.params;
+  let user = await User.findOne({ where: { openid } })
   ctx.body = {
-    code: 0,
-    data: result,
+    code: 200,
+    data: user
   };
 });
 
