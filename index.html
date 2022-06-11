@@ -8,8 +8,7 @@
         mce_href="https://static-index-4gtuqm3bfa95c963-1304825656.tcloudbaseapp.com/official-website/favicon.svg"
         type="image/x-icon" />
     <meta name="viewport" content="width=650,user-scalable=no" />
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://weui.io/style/weui.css">
     <title>欢迎注册</title>
     <style>
@@ -147,16 +146,26 @@
     </div>
 </body>
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.8/weui.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script src="https://web-9gikcbug35bad3a8-1304825656.tcloudbaseapp.com/sdk/1.3.0/cloud.js"></script>
+<script src="https://web-9gikcbug35bad3a8-1304825656.tcloudbaseapp.com/sdk/1.3.0/mplogin2.min.js"></script>
 <script>
-    window.onload = async function () {
-        initCloud()
+    window.onload = function () {
+        window.mplogin2.doLogin({
+        appid: 'wx068fdf5b7a3eed94',                   // 必填，公众号appid，将以此 appid 名义进行请求
+        scope: 'snsapi_userinfo',                     // 必填，登录方式：snsapi_userinfo、snsapi_base// 必填，登录方式：snsapi_userinfo、snsapi_base
+        // noback: true,                              // 选填，登录完不直接返回业务页面，执行自定义附加操作
+        // redirect: window.location.href             // 跳转的页面，默认是当前页面，如果你有自定义登录成功页，可以联动设置 
+        }).then(res => {
+        // noback为 true 时，将不会返回业务页面，执行到这里
+        // 此时需要自行控制跳转回业务页面
+        init()
+        console.log(res)
+        })
     }
-    async function initCloud() {
+    async function init() {
         let c1 = new wx.cloud.Cloud({
             resourceAppid: "wx068fdf5b7a3eed94", // 微信云托管所在的「小程序/公众号」appid
             resourceEnv: "prod-1g3ezreeff916953", // 微信云托管环境ID，不能为空
