@@ -154,7 +154,7 @@
 <script>
     window.onload = function () {
         window.mplogin2.doLogin({
-        appid: 'wx068fdf5b7a3eed94',                   // 必填，公众号appid，将以此 appid 名义进行请求
+        appid: 'wxe287927dcf935c1e',                   // 必填，公众号appid，将以此 appid 名义进行请求
         scope: 'snsapi_userinfo',                     // 必填，登录方式：snsapi_userinfo、snsapi_base// 必填，登录方式：snsapi_userinfo、snsapi_base
         // noback: true,                              // 选填，登录完不直接返回业务页面，执行自定义附加操作
         // redirect: window.location.href             // 跳转的页面，默认是当前页面，如果你有自定义登录成功页，可以联动设置 
@@ -167,7 +167,7 @@
     }
     async function init() {
         let c1 = new wx.cloud.Cloud({
-            resourceAppid: "wx068fdf5b7a3eed94", // 微信云托管所在的「小程序/公众号」appid
+            resourceAppid: "wxe287927dcf935c1e", // 微信云托管所在的「小程序/公众号」appid
             resourceEnv: "prod-1g3ezreeff916953", // 微信云托管环境ID，不能为空
         });
         await c1.init();
