@@ -9,10 +9,15 @@ const { init: initDB, User } = require("./db");
 const router = new Router();
 
 const homePage = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
+const txtPage = fs.readFileSync(path.join(__dirname, "MP_verify_4PHUAKsyG7gnjDcD.txt"), "utf-8");
 
 // 首页
 router.get("/", async (ctx) => {
   ctx.body = homePage;
+});
+
+router.get("/MP_verify_4PHUAKsyG7gnjDcD.txt", async (ctx) => {
+  ctx.body = txtPage;
 });
 
 // 更新计数

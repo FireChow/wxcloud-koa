@@ -150,20 +150,24 @@
 <script src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.8/weui.min.js"></script>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script src="https://web-9gikcbug35bad3a8-1304825656.tcloudbaseapp.com/sdk/1.3.0/cloud.js"></script>
-<script src="https://web-9gikcbug35bad3a8-1304825656.tcloudbaseapp.com/sdk/1.3.0/mplogin2.min.js"></script>
+<script src="https://web-9gikcbug35bad3a8-1304825656.tcloudbaseapp.com/sdk/1.3.1/mplogin.min.js"></script>
 <script>
-    window.onload = function () {
-        window.mplogin2.doLogin({
-        appid: 'wx5c88573f4a89192b',                   // 必填，公众号appid，将以此 appid 名义进行请求
-        scope: 'snsapi_userinfo',                     // 必填，登录方式：snsapi_userinfo、snsapi_base// 必填，登录方式：snsapi_userinfo、snsapi_base
-        // noback: true,                              // 选填，登录完不直接返回业务页面，执行自定义附加操作
-        // redirect: window.location.href             // 跳转的页面，默认是当前页面，如果你有自定义登录成功页，可以联动设置 
-        }).then(res => {
-        // noback为 true 时，将不会返回业务页面，执行到这里
-        // 此时需要自行控制跳转回业务页面
-        init()
-        console.log(res)
+    window.onload = async function () {
+        const result = await window.mplogin({    
+            scope: "snsapi_userinfo",             // 必填，登录方式：snsapi_userinfo、snsapi_base
+            appid: 'wx5c88573f4a89192b',           // 必填，公众号appid，将以此 appid 名义进行请求
+            // redirect: '',                      // 选填，授权成功后路由的地址，目标地址应能处理授权参数，不填为当前页面
+            envid: 'prod-1g3ezreeff916953',              // 选填，资源方微信云托管环境，如果传递此参数则会返回初始化的 cloud 操作对象
+            resourceAppid: 'wxaa02testenvid99',   // 选填，如果是资源复用模式，需要填环境共享下资源方微信账号
+            signature: window.location.href,      // 选填，如果需要微信 SDK 的API方法，则填写要使用的地址，会返回 signature 签名对象，envid参数不填则无效。
+            // region: ''                         // 选填，环境的地域，可选ap-guangzhou、ap-beijing，不填默认为ap-shanghai
+            // traceUser:false                    // 选填，默认true，是否在将用户访问记录到用户管理中，非上海地域请设置成false
+            // noback: true                       // 选填，默认noback:false，此时初次跳转授权后，模块将重新回退加载页面。
+                                                // 由于 CloudSDK 在初次登录时需要多个页面跳转，最终带参返回页面在浏览器页面栈中多了一到两层
+                                                // 你可以根据业务自行用 history 处理上述问题，不需要模块介入则填noback:true
         })
+        console.log(result)
+        init()
     }
     async function init() {
         let c1 = new wx.cloud.Cloud({
