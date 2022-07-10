@@ -55,7 +55,7 @@ app
   .use(logger())
   .use(bodyParser())
   .use(router.routes())
-  .use(router.allowedMethods());
+  .use(router.allowedMethods())
 
 const port = process.env.PORT || 80;
 async function bootstrap() {
